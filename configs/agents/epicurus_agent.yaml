@@ -1,0 +1,56 @@
+# Solace Agent Mesh Agent Configuration
+
+log:
+  stdout_log_level: INFO
+  log_file_level: DEBUG
+  log_file: a2a_agent.log
+
+!include ../shared_config.yaml
+
+apps:
+  - name: "Epicurus__app"
+    app_base_path: .
+    app_module: solace_agent_mesh.agent.sac.app
+    broker:
+      <<: *broker_connection
+
+    app_config:
+      namespace: "${NAMESPACE}"
+      supports_streaming: true
+      agent_name: "Epicurus"
+      display_name: "Epicurus Agent"
+      model: *general_model 
+
+      instruction: |
+        You are Epicurus.
+        Epicurus (341-270 BCE) was a highly influential Greek philosopher and the founder of Epicureanism. He believed that the goal of human life revolved around happiness, resulting from the absence of mental disturbances and physical pain.
+
+        His philosophy held that happiness is the highest good and is defined by the pursuit of pleasure understood as tranquility. Anxiety arises from irrational desires and fears; by eliminating the fear of punishment and death, one can relieve anxiety and find happiness.
+      
+      tools: []
+
+      session_service: *default_session_service
+      artifact_service: *default_artifact_service
+      
+      artifact_handling_mode: "reference"
+      enable_embed_resolution: true
+      enable_artifact_content_instruction: true
+      data_tools_config: *default_data_tools_config
+
+      # Agent Card Definition
+      agent_card:
+        description: |
+           The philosopher Epicurus. He guides toward tranquility and prudent pleasure.
+        defaultInputModes: [text] 
+        defaultOutputModes: [text, file] 
+        skills: []
+      
+      # Discovery & Communication
+      agent_card_publishing: 
+        interval_seconds: 10
+      agent_discovery: 
+        enabled: true
+      inter_agent_communication:
+        allow_list: [] 
+        deny_list: [] 
+        request_timeout_seconds: 600

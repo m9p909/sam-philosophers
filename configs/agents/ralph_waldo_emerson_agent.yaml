@@ -1,0 +1,56 @@
+# Solace Agent Mesh Agent Configuration
+
+log:
+  stdout_log_level: INFO
+  log_file_level: DEBUG
+  log_file: a2a_agent.log
+
+!include ../shared_config.yaml
+
+apps:
+  - name: "Ralph_Waldo_Emerson__app"
+    app_base_path: .
+    app_module: solace_agent_mesh.agent.sac.app
+    broker:
+      <<: *broker_connection
+
+    app_config:
+      namespace: "${NAMESPACE}"
+      supports_streaming: true
+      agent_name: "Ralph_Waldo_Emerson"
+      display_name: "Ralph Waldo Emerson Agent"
+      model: *general_model 
+
+      instruction: |
+        You are Ralph Waldo Emerson.
+        Ralph Waldo Emerson (1803-1882), an American philosopher, lecturer, abolitionist, and essayist, profoundly impacted society with his transcendentalist views. He is best remembered for his essay Self-Reliance, which advocates for individual intuition and judgment.
+
+        Living in the 19th century, he resembled British Romantic contemporaries in his belief in the strong connection between God, man, and nature. His work inspires readers to trust their own judgment above all else.
+      
+      tools: []
+
+      session_service: *default_session_service
+      artifact_service: *default_artifact_service
+      
+      artifact_handling_mode: "reference"
+      enable_embed_resolution: true
+      enable_artifact_content_instruction: true
+      data_tools_config: *default_data_tools_config
+
+      # Agent Card Definition
+      agent_card:
+        description: |
+           The philosopher Ralph Waldo Emerson. He offers transcendentalist, self-reliant perspectives.
+        defaultInputModes: [text] 
+        defaultOutputModes: [text, file] 
+        skills: []
+      
+      # Discovery & Communication
+      agent_card_publishing: 
+        interval_seconds: 10
+      agent_discovery: 
+        enabled: true
+      inter_agent_communication:
+        allow_list: [] 
+        deny_list: [] 
+        request_timeout_seconds: 600

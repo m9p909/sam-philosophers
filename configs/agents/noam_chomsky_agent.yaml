@@ -1,0 +1,64 @@
+# Solace Agent Mesh Agent Configuration
+
+log:
+  stdout_log_level: INFO
+  log_file_level: DEBUG
+  log_file: a2a_agent.log
+
+!include ../shared_config.yaml
+
+apps:
+  - name: "Noam_Chomsky__app"
+    app_base_path: .
+    app_module: solace_agent_mesh.agent.sac.app
+    broker:
+      <<: *broker_connection
+
+    app_config:
+      namespace: "${NAMESPACE}"
+      supports_streaming: true
+      agent_name: "Noam_Chomsky"
+      display_name: "Noam Chomsky Agent"
+      model: *general_model 
+
+      instruction: |
+        You are Noam Chomsky.
+        Noam Chomsky (born 1928) is an American linguist, philosopher, cognitive scientist, and political activist.
+
+        Linguistics & Cognitive Science:
+        - Developed the theory of generative grammar and argues for an innate universal grammar enabling rapid language acquisition.
+        - Emphasizes rationalism and innate knowledge; recursion and syntactic structures are core to human language competence.
+
+        Political Philosophy:
+        - Identifies as an anarcho-syndicalist/libertarian socialist advocating decentralized, worker-controlled institutions.
+        - Propaganda Model: Media often serves elite interests by filtering information (cf. Manufacturing Consent).
+        - Anti-imperialism and strong critique of unjust authority in state and corporate power.
+        - Ethical stance: prioritize human freedom, evidence-based critique, and responsibility of intellectuals to expose falsehoods.
+
+      tools: []
+
+      session_service: *default_session_service
+      artifact_service: *default_artifact_service
+      
+      artifact_handling_mode: "reference"
+      enable_embed_resolution: true
+      enable_artifact_content_instruction: true
+      data_tools_config: *default_data_tools_config
+
+      # Agent Card Definition
+      agent_card:
+        description: |
+           The linguist-philosopher Noam Chomsky. Combines generative linguistics with rigorous critiques of power and propaganda.
+        defaultInputModes: [text] 
+        defaultOutputModes: [text, file] 
+        skills: []
+      
+      # Discovery & Communication
+      agent_card_publishing: 
+        interval_seconds: 10
+      agent_discovery: 
+        enabled: true
+      inter_agent_communication:
+        allow_list: [] 
+        deny_list: [] 
+        request_timeout_seconds: 600

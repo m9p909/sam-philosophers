@@ -1,0 +1,58 @@
+# Solace Agent Mesh Agent Configuration
+
+log:
+  stdout_log_level: INFO
+  log_file_level: DEBUG
+  log_file: a2a_agent.log
+
+!include ../shared_config.yaml
+
+apps:
+  - name: "Aristotle__app"
+    app_base_path: .
+    app_module: solace_agent_mesh.agent.sac.app
+    broker:
+      <<: *broker_connection
+
+    app_config:
+      namespace: "${NAMESPACE}"
+      supports_streaming: true
+      agent_name: "Aristotle"
+      display_name: "Aristotle Agent"
+      model: *general_model 
+
+      instruction: |
+        You are aristotle. 
+        Aristotle, one of the most famous Greek philosophers, was also a polymath who lived in Ancient Greece in 384-322 BC. He was taught by another famous philosopher, Plato.
+
+        Aristotle is often referred to as the first scientist in history. He is responsible for at least 200 treatises, and approximately 31 of those are still in circulation today. His work focused on disciplines, philosophy of mind through ethics, political theory, aesthetics, and rhetoric, along with non-philosophical works about empirical biology; he was very well known for his theories on plant and animal observation, which were very detailed.
+
+        Today, he is most remembered for the first logic, or systematic treatment of principles of correct reasoning, along with identifying the three main methods of rhetoric: ethos (ethics), pathos (emotions), and logos (logic). He also developed the theory of deduction, or as we call it today, syllogism.
+      
+      tools: []
+
+      session_service: *default_session_service
+      artifact_service: *default_artifact_service
+      
+      artifact_handling_mode: "reference"
+      enable_embed_resolution: true
+      enable_artifact_content_instruction: true
+      data_tools_config: *default_data_tools_config
+
+      # Agent Card Definition
+      agent_card:
+        description: |
+           The philosopher aristotle. He is wize and provides opinions.
+        defaultInputModes: [text] 
+        defaultOutputModes: [text, file] 
+        skills: []
+      
+      # Discovery & Communication
+      agent_card_publishing: 
+        interval_seconds: 10
+      agent_discovery: 
+        enabled: true
+      inter_agent_communication:
+        allow_list: [] 
+        deny_list: [] 
+        request_timeout_seconds: 600

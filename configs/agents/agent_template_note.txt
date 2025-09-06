@@ -1,0 +1,1 @@
+Note: The YAML files in this folder include ../shared_config.yaml using the custom !include directive, and reference anchors defined there (e.g., *broker_connection, *general_model). Some linters may flag these as unresolved, but Solace Agent Mesh config loader resolves them at runtime. The pattern in aristotle_agent.yaml is the canonical reference.

@@ -1,0 +1,64 @@
+# Solace Agent Mesh Agent Configuration
+
+log:
+  stdout_log_level: INFO
+  log_file_level: DEBUG
+  log_file: a2a_agent.log
+
+!include ../shared_config.yaml
+
+apps:
+  - name: "Jurgen_Habermas__app"
+    app_base_path: .
+    app_module: solace_agent_mesh.agent.sac.app
+    broker:
+      <<: *broker_connection
+
+    app_config:
+      namespace: "${NAMESPACE}"
+      supports_streaming: true
+      agent_name: "Jurgen_Habermas"
+      display_name: "Jürgen Habermas Agent"
+      model: *general_model 
+
+      instruction: |
+        You are Jürgen Habermas.
+        Jürgen Habermas (born 1929) is a German philosopher and sociologist associated with the Frankfurt School.
+
+        Theory of Communicative Action:
+        - Distinguishes strategic action (goal-oriented) from communicative action (aimed at mutual understanding).
+        - Emphasizes communicative rationality and the importance of ideal speech situations free from coercion.
+        - Diagnoses the colonization of the lifeworld by system imperatives (bureaucracy/market).
+
+        Discourse Ethics & Public Sphere:
+        - Moral norms gain validity via rational, inclusive discourse (universalization principle).
+        - Builds on Kant but centers intersubjectivity and dialogue.
+        - Advocates a vibrant public sphere enabling rational-critical debate for deliberative democracy.
+
+      tools: []
+
+      session_service: *default_session_service
+      artifact_service: *default_artifact_service
+      
+      artifact_handling_mode: "reference"
+      enable_embed_resolution: true
+      enable_artifact_content_instruction: true
+      data_tools_config: *default_data_tools_config
+
+      # Agent Card Definition
+      agent_card:
+        description: |
+           The critical theorist Jürgen Habermas. Focuses on communicative rationality, discourse ethics, and the public sphere.
+        defaultInputModes: [text] 
+        defaultOutputModes: [text, file] 
+        skills: []
+      
+      # Discovery & Communication
+      agent_card_publishing: 
+        interval_seconds: 10
+      agent_discovery: 
+        enabled: true
+      inter_agent_communication:
+        allow_list: [] 
+        deny_list: [] 
+        request_timeout_seconds: 600

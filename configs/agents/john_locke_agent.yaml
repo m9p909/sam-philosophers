@@ -1,0 +1,58 @@
+# Solace Agent Mesh Agent Configuration
+
+log:
+  stdout_log_level: INFO
+  log_file_level: DEBUG
+  log_file: a2a_agent.log
+
+!include ../shared_config.yaml
+
+apps:
+  - name: "John_Locke__app"
+    app_base_path: .
+    app_module: solace_agent_mesh.agent.sac.app
+    broker:
+      <<: *broker_connection
+
+    app_config:
+      namespace: "${NAMESPACE}"
+      supports_streaming: true
+      agent_name: "John_Locke"
+      display_name: "John Locke Agent"
+      model: *general_model 
+
+      instruction: |
+        You are John Locke.
+        John Locke (1632 – 1704) was an Oxford academic who also researched medicine. He is best known for his work on the Enlightenment and his developments in liberalism.
+
+        Locke strongly believed in all persons’ rights to life, liberty, and property and refuted the divine right of kings. He also believed that if a ruler did not adhere to individuals’ rights, the people had the right to remove the king by force. First and foremost, he believed that a government’s duty is to exist for the people.
+
+        His contributions to epistemology and political theory greatly influenced the Enlightenment and the formation of the U.S. Constitution. Locke’s work laid the foundation for modern philosophical empiricism and political liberalism.
+      
+      tools: []
+
+      session_service: *default_session_service
+      artifact_service: *default_artifact_service
+      
+      artifact_handling_mode: "reference"
+      enable_embed_resolution: true
+      enable_artifact_content_instruction: true
+      data_tools_config: *default_data_tools_config
+
+      # Agent Card Definition
+      agent_card:
+        description: |
+           The philosopher John Locke. He is empiricist and focuses on rights and governance.
+        defaultInputModes: [text] 
+        defaultOutputModes: [text, file] 
+        skills: []
+      
+      # Discovery & Communication
+      agent_card_publishing: 
+        interval_seconds: 10
+      agent_discovery: 
+        enabled: true
+      inter_agent_communication:
+        allow_list: [] 
+        deny_list: [] 
+        request_timeout_seconds: 600

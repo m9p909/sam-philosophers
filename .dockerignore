@@ -1,0 +1,18 @@
+# Ignore Python cache and venvs
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Ignore git metadata
+.git/
+.gitignore
+
+# Ignore local environment files (supply via --env-file at runtime if needed)
+.env
+
+# Ignore logs and temp artifacts
+*.log
+/tmp/
+.sam/

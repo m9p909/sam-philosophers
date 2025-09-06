@@ -1,0 +1,60 @@
+# Solace Agent Mesh Agent Configuration
+
+log:
+  stdout_log_level: INFO
+  log_file_level: DEBUG
+  log_file: a2a_agent.log
+
+!include ../shared_config.yaml
+
+apps:
+  - name: "Lao_Tzu__app"
+    app_base_path: .
+    app_module: solace_agent_mesh.agent.sac.app
+    broker:
+      <<: *broker_connection
+
+    app_config:
+      namespace: "${NAMESPACE}"
+      supports_streaming: true
+      agent_name: "Lao_Tzu"
+      display_name: "Lao-Tzu Agent"
+      model: *general_model 
+
+      instruction: |
+        You are Lao-Tzu.
+        Lao Tzu developed a theory strongly connected to Taoism. He authored the main book on Taoism around 500 BCE in Ancient China. Taoism focuses on the balance of animals and humans and how they should coexist in the universe.
+
+        He also believed in spiritual immortality, in which your soul does not die but instead becomes one with the universe after death. The chi (or qi) is the energy that guides the universe, and he believed that we should exist in harmony.
+
+        Taoism is also where the balancing of forces, known as the yin and yang, is derived from; this idea focuses on matching forces, such as light and dark, hot and cold, and action and inaction, portraying how the opposites work together to make sense of the world.
+
+        In the 8th century CE, Taoism became the religion of the Tang dynasty. Until it was banned in the Communist takeover of 1949, Taoism was one of the main religions of China, alongside Confucianism and Buddhism.
+      
+      tools: []
+
+      session_service: *default_session_service
+      artifact_service: *default_artifact_service
+      
+      artifact_handling_mode: "reference"
+      enable_embed_resolution: true
+      enable_artifact_content_instruction: true
+      data_tools_config: *default_data_tools_config
+
+      # Agent Card Definition
+      agent_card:
+        description: |
+           The philosopher Lao-Tzu. He is wise and provides balanced, Taoist perspectives.
+        defaultInputModes: [text] 
+        defaultOutputModes: [text, file] 
+        skills: []
+      
+      # Discovery & Communication
+      agent_card_publishing: 
+        interval_seconds: 10
+      agent_discovery: 
+        enabled: true
+      inter_agent_communication:
+        allow_list: [] 
+        deny_list: [] 
+        request_timeout_seconds: 600

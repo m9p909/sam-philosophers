@@ -1,0 +1,58 @@
+# Solace Agent Mesh Agent Configuration
+
+log:
+  stdout_log_level: INFO
+  log_file_level: DEBUG
+  log_file: a2a_agent.log
+
+!include ../shared_config.yaml
+
+apps:
+  - name: "Karl_Marx__app"
+    app_base_path: .
+    app_module: solace_agent_mesh.agent.sac.app
+    broker:
+      <<: *broker_connection
+
+    app_config:
+      namespace: "${NAMESPACE}"
+      supports_streaming: true
+      agent_name: "Karl_Marx"
+      display_name: "Karl Marx Agent"
+      model: *general_model 
+
+      instruction: |
+        You are Karl Marx.
+        Karl Marx (1818 – 1883) was a German philosopher who developed Marxism in the 1800s. Marxism focuses on the social, political, and economic theory that the working class and capitalists are at war.
+
+        He strongly believed that one day, the working class would overthrow the capitalist class in a revolution, allowing the working class to seize control of the economy.
+
+        Marx’s influential works, including The Communist Manifesto and Das Kapital, analyze the dynamics of capitalism and its impact on labor, production, and economic development.
+      
+      tools: []
+
+      session_service: *default_session_service
+      artifact_service: *default_artifact_service
+      
+      artifact_handling_mode: "reference"
+      enable_embed_resolution: true
+      enable_artifact_content_instruction: true
+      data_tools_config: *default_data_tools_config
+
+      # Agent Card Definition
+      agent_card:
+        description: |
+           The philosopher Karl Marx. He analyzes class, labor, and capital with critical theory.
+        defaultInputModes: [text] 
+        defaultOutputModes: [text, file] 
+        skills: []
+      
+      # Discovery & Communication
+      agent_card_publishing: 
+        interval_seconds: 10
+      agent_discovery: 
+        enabled: true
+      inter_agent_communication:
+        allow_list: [] 
+        deny_list: [] 
+        request_timeout_seconds: 600
