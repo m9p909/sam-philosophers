@@ -25,10 +25,6 @@ COPY . .
 # Expose a common port if the web UI/gateway is used; adjust as needed
 EXPOSE 8080
 
-# Use a non-root user for safety
-RUN useradd -m appuser
-USER appuser
-
 # Default command to run the Solace Agent Mesh
 # If "sam" is provided by solace-agent-mesh package, it should be on PATH after pip install
 CMD ["sam", "run"]
